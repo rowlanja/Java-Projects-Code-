@@ -1,0 +1,42 @@
+import java.util.HashMap;
+import java.util.Timer;
+import java.util.TimerTask;
+
+public class URLShortener {
+
+    Timer timer;
+	private HashMap<String, URLShortener> associations = new HashMap<String, URLShortener>();
+	private static String baseString = "aaaaa";
+	private String longURL, shortURL;
+	
+	public URLShortener(String longURL, String shortURL) {
+		timer = new Timer();
+		timer.schedule(new RemindTask(), 10*1000);
+		this.longURL = longURL;
+		this.shortURL = shortURL;
+	}
+	
+	
+	private void addShortUrl(String longURL) {
+		String x = baseString.substring(0, baseString.length()-1);
+		baseString =  x + Character.toString((char)(((int)baseString.charAt(baseString.length() -1))+1));
+		timer = new Timer();
+		
+		associations.put(baseString, new URLShortener(longURL, baseString));
+	}
+	
+	private String getLongURL(String ShortURL) {
+		return associations.get(ShortURL);
+	}
+
+	public static void main(String[] args) {
+	}
+	
+	
+	class RemindTask extends TimerTask {
+        public void run() {
+            System.out.println("URL expired!");
+            timer.cancel();
+        }
+    }
+}

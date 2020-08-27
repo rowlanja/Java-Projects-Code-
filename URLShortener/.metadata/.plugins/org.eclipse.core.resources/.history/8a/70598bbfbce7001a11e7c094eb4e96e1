@@ -1,0 +1,8 @@
+
+public class URLShortener {
+	//   https://dzone.com/articles/url-shortener-detailed-explanation
+	private static final String allowedString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+	private char[] allowedCharacters = allowedString.toCharArray();
+	private int base = allowedCharacters.length;
+	
+}

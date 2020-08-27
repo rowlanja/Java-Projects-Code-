@@ -1,0 +1,6 @@
+
+public class URLShortener {
+	private static final String allowedString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+	private char[] allowedCharacters = allowedString.toCharArray();
+	private int base = allowedCharacters.length;
+}

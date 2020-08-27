@@ -1,0 +1,45 @@
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
+public class URLShortener extends Thread{
+
+	private int Time;
+	private HashMap<String, URLShortener> associations = new HashMap<String, URLShortener>();
+	private String baseString = "aaaaa";
+	private String longURL, shortURL;
+	
+	public URLShortener(String longURL, String shortURL) {
+		this.Time = 10;
+		this.longURL = longURL;
+		this.shortURL = shortURL;
+	}
+	
+	private void addShortUrl(String longURL) {
+		String x = baseString.substring(0, baseString.length()-1);
+		baseString =  x + Character.toString((char)(((int)baseString.charAt(baseString.length() -1))+1));
+		associations.put(baseString, new URLShortener(longURL, baseString));
+	}
+	
+	private String getLongURL(String ShortURL) {
+		return this.longURL;
+	}
+	
+	private String getShortURL(String ShortURL) {
+		return this.longURL;
+	}
+	
+	public static void main(String[] args) {
+		
+	}
+
+	public void run() {
+        Iterator hmIterator = associations.entrySet().iterator(); 
+        while (hmIterator.hasNext()) { 
+            Map.Entry mapElement = (Map.Entry)hmIterator.next(); 
+            int marks = ((int)mapElement.getValue() + 10); 
+            System.out.println(mapElement.getKey() + " : " + marks); 
+        } 
+        Thread.sleep(3000);
+	}
+}

@@ -1,0 +1,20 @@
+import java.util.HashMap;
+
+public class URLShortener {
+	//   https://dzone.com/articles/url-shortener-detailed-explanation
+	private HashMap<String, String> associations = new HashMap<String, String>();
+	private String baseString = "aaaaa";
+	
+	private void addShortUrl(String longURL) {
+		associations.put(baseString, longURL);
+		Character.toString( (char)(((int)baseString.charAt(baseString.length()))+1));
+	}
+	
+	private String getLongURL(String ShortURL) {
+		return associations.get(ShortURL);
+	}
+	
+	public static void main(String[] args) {
+		
+	}
+}

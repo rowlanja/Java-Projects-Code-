@@ -1,0 +1,41 @@
+import java.util.HashMap;
+import java.util.Timer;
+import java.util.TimerTask;
+
+public class URLShortener extends Thread{
+
+    Timer timer;
+	private HashMap<String, URLShortener> associations = new HashMap<String, URLShortener>();
+	private static String baseString = "aaaaa";
+	public String longURL, shortURL;
+	
+	public URLShortener(String longURL, String shortURL) {
+		this.timer = new Timer();
+		timer.schedule(new RemindTask(), 10*1000);
+		this.longURL = longURL;
+		this.shortURL = shortURL;
+	}
+	
+	
+	private void addShortUrl(String longURL) {
+		String x = baseString.substring(0, baseString.length()-1);
+		baseString =  x + Character.toString((char)(((int)baseString.charAt(baseString.length() -1))+1));
+		timer = new Timer();
+		associations.put(baseString, new URLShortener(longURL, baseString));
+	}
+	
+	private String getLongURL(String ShortURL) {
+		return this.longURL;
+	}
+	private String getShortURL(String ShortURL) {
+		return this.longURL;
+	}
+	public static void main(String[] args) {
+	}
+	
+	
+	class removeOldURL extends Thread{
+		
+		p
+    }
+}
