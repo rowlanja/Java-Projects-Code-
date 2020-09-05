@@ -1,8 +1,6 @@
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.ArrayList;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -24,29 +22,33 @@ public class URLShortener implements Runnable{
 
 	@Override
 	 public void run() {
+		ArrayList<String> obseleteURLS = new ArrayList<String>();
     	for (Map.Entry mapElement : associations.entrySet()) { 
-			URLShortener URL = (URLShortener)mapElement.getValue(); 
-			System.out.println("Decrementing " + URL.shortURL + " Time : " + URL.Time);
+			URLShortener URL = (URLShortener)mapElement.getValue();
 			URL.Time--;
+			System.out.println("Decrementing " + URL.shortURL + " Time : " + URL.Time);
 			if(URL.Time == 0) {
-				associations.remove(URL.shortURL);
-				System.out.println("Removed LongURL : " + (String)mapElement.getKey() + " shortURL : " + URL.shortURL );
+				obseleteURLS.add(URL.shortURL);
 			}
     	}
-	 }
+    	for(String url : obseleteURLS) {
+			System.out.println("Removed LongURL : " + associations.get(url).longURL + " shortURL : " + url  + " as URLExpired");
+    		associations.remove(url);
+    	}
+    }
 	
 	public void start(){
 		ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
         Runnable task = new URLShortener();
-        int initialDelay = 4;
-        int periodicDelay = 2;
- 
+        int initialDelay = 0;
+        int periodicDelay = 1;
         scheduler.scheduleAtFixedRate(task, initialDelay, periodicDelay,TimeUnit.SECONDS);
 	}
 
 	private String addShortUrl(String longURL, String baseString ) {
-		String webName = "www.lilMan.com/";
+		String webName = "www.lilURL.com/";
 		associations.put(webName + baseString, new URLShortener(longURL, webName + baseString));
+		System.out.println("Added Shorter URL " + webName + baseString + " for longer URL " + longURL);
 		return baseString;
 	}
 
@@ -85,9 +87,6 @@ public class URLShortener implements Runnable{
 		}
 	}
 
-
-
-
 	public static void main(String[] args) {
 		String baseString = "a";
 		new URLShortener().addShortUrl("www.youtube.com/sgergeERGEwegwegERG", baseString);
@@ -97,7 +96,6 @@ public class URLShortener implements Runnable{
 		new URLShortener().addShortUrl("www.youtube.com/ERGewreergggeRGEggq", baseString);
 		baseString = new URLShortener().incrementString(baseString) ; 
 		new URLShortener().addShortUrl("www.youtube.com/qWQQQQQQdqwdqeffwef", baseString);
-		System.out.println(baseString);
 		//new URLShortener().printListedURLS();
 		
 		URLShortener x = new URLShortener();
