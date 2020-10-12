@@ -27,9 +27,8 @@ class LCATest {
 		assertEquals(x, "C", "Common Ancestor must be C");
 	}
 	
-
+	@Test
 	void test2() {
-
 		LCA test1 = new LCA();
 		HashMap<String,ArrayList<String>> relations2 =
 				new HashMap<String,ArrayList<String>>();//Creating HashMap
@@ -40,22 +39,21 @@ class LCATest {
 		String y = test1.findAnchestors(relations2, "B", "C");
 		System.out.println("common ancestor : " + y);
 
-		assertEquals(y, "C", "Common Ancestor must be A");
+		assertEquals(y, "A", "Common Ancestor must be A");
 	}
 	
+	@Test
 	void test3() {
-
 		LCA test1 = new LCA();
 		HashMap<String,ArrayList<String>> relations2 =
 				new HashMap<String,ArrayList<String>>();//Creating HashMap
 		
-		relations2.put("A", new ArrayList<String>(Arrays.asList("B", "C")));
+		relations2.put("A", new ArrayList<String>());
 		relations2.put("C", new ArrayList<String>());
 		relations2.put("B", new ArrayList<String>());
 		String y = test1.findAnchestors(relations2, "B", "C");
 		System.out.println("common ancestor : " + y);
-
-		assertEquals(y, "C", "Common Ancestor must be A");
+		assertEquals(y, "", "Common Ancestor must be A");
 	}
 
 	
