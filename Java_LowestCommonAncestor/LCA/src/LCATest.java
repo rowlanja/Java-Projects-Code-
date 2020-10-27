@@ -77,4 +77,21 @@ class LCATest {
 		System.out.println("common ancestor : " + y);
 		assertEquals(y, "A", "Common Ancestor must be A");
 	}
+	
+	// DIRECTED ACYCLICAL GRAPH
+		@Test
+		void test5() {
+			LCA test1 = new LCA();
+			HashMap<String,ArrayList<String>> relations2 =
+					new HashMap<String,ArrayList<String>>();//Creating HashMap
+			
+			relations2.put("A", new ArrayList<String>(Arrays.asList("B", "C", "D", "E")));
+			relations2.put("B", new ArrayList<String>(Arrays.asList("D")));
+			relations2.put("C", new ArrayList<String>(Arrays.asList("D")));
+			relations2.put("D", new ArrayList<String>(Arrays.asList("E")));
+			relations2.put("E", new ArrayList<String>());
+			String y = test1.findAnchestors(relations2, "B", "E");
+			System.out.println("common ancestor : " + y);
+			assertEquals(y, "A", "Common Ancestor must be A");
+		}
 }
