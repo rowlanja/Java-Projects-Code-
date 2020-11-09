@@ -6,29 +6,21 @@ public class DAG {
 
 	private final int V;
 	private final ArrayList<Integer>[] adj;
-	// For LCA
 	private final ArrayList<Integer>[] reverseAdj;
 
 	public DAG(int V)
 	{
 		this.V = V;
 		adj = (ArrayList<Integer>[]) new ArrayList[V];
-
-		// For LCA
 		reverseAdj = (ArrayList<Integer>[]) new ArrayList[V];
-
 		for (int v = 0; v < V; v++)
 		{
 			adj[v] = new ArrayList<Integer>();
-			//For LCA
 			reverseAdj[v] = new ArrayList<Integer>();
 		}
 	}
 
-
-	public int V(){
-		return V;
-	}
+	public int V(){ return V;}
 
 	public ArrayList<Integer> adj(int v)
 	{ return adj[v]; }
@@ -40,8 +32,6 @@ public class DAG {
 		DirectedDFS dfsObj = new DirectedDFS(this, x);
 		return dfsObj.visited(y);
 	}
-
-	// Class to create a depth first search object on a directed graph.
 	private class DirectedDFS
 	{
 		private boolean[] marked;
@@ -53,18 +43,13 @@ public class DAG {
 			revMarked = new boolean[G.V()];
 			dfs(G, s);
 		}
-
-
-		//standard dfs - in the flow of direction.
 		private void dfs(DAG G, int v)
 		{
 			marked[v] = true;
 			for (int w : G.adj(v))
 				if (!marked[w]) dfs(G, w);
 		}
-
-
-		//dfs against the flow of direction - used to find all parents.
+		
 		private void reverseDfs (DAG G, int v)
 		{
 			revMarked[v] = true;
@@ -77,19 +62,14 @@ public class DAG {
 
 		public boolean revVisited(int v)
 		{ return revMarked[v]; }
-	} //End of DFS class
+	} 
 
 
 	public boolean addEdge(int v, int w)
 	{
-		// acyclic -> If will not create a cycle -> add edge
-		// 1. not self loop
-		// 2. !hasPath w -> v
 		if(v >= this.V || w >= this.V || v < 0 || w < 0){
 			return false;
 		}
-
-
 		if(v != w && !hasPath(w, v) && !adj[v].contains(w)){
 			adj[v].add(w);
 			reverseAdj[w].add(v);
@@ -101,38 +81,18 @@ public class DAG {
 	}
 	public ArrayList<Integer> lowestCommonAncestor(int x, int y)
 	{
-
-		//mark all X's parents
-		//For each of X's parents, check if Y is child
-		//if it is
-		//{
-		// get distance to X
-		// distance to Y	
-		// if max(xDist, yDist) < currentMaxDist
-		// 		empty bag and put in this node
-		//
-		// if max(xDist, yDist) == currentMaxDist
-		//		add this node to bag
-		//}
-
 		ArrayList<Integer> lcas = new ArrayList<Integer>();
 		int currentMaxDist = Integer.MAX_VALUE;
-
-
-		if(x==y || x>=this.V || y>=this.V || x<0 || y<0) { return lcas; } //If invalid input return empty bag.
-
+		if(x==y || x>=this.V || y>=this.V || x<0 || y<0) { return lcas; } 
 		DirectedDFS dfsObject = new DirectedDFS(this, x);
 		dfsObject.reverseDfs(this, x);
 		int xDist, yDist;
-
 		for(int v = 0; v < this.V; v++)
 		{
-
 			if(dfsObject.revVisited(v) && hasPath(v, y))
 			{
 				xDist = getDistance(v, x);
 				yDist = getDistance(v, y);
-
 				if(Integer.max(xDist, yDist) < currentMaxDist)
 				{		
 					lcas = new ArrayList<Integer>();
@@ -169,19 +129,13 @@ public class DAG {
 				int v = q.remove();
 				for (int w : this.adj(v)) {
 					if (!marked[w]) {
-
 						distTo[w] = distTo[v] + 1;
 						marked[w] = true;
-
 						q.add(w);
 					}
 				}
 			}
-
 			return distTo[target];
 		}
 	}
-
-
-
 }

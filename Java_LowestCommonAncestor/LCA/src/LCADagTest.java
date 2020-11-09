@@ -5,17 +5,13 @@ import java.util.ArrayList;
 
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
-/*
- * Unit Tests for LCA Algorithim 
- */
-class LCATest {
+
+class LCADagTest {
 	@Before
 	public void creator() {
 		DAG DAG = new DAG(10);
-
 	}
 
-	//Test the DAG structure constructor and Vertices finder
 	@Test
 	public void testDAGVertices() {
 		DAG DAG = new DAG(5);
@@ -24,7 +20,6 @@ class LCATest {
 		assertEquals(5,vertices,"Did not count the correct vertices");
 	}
 
-	//Testing adding edges
 	@Test
 	public void testAddEdges() {
 		DAG DAG = new DAG(10);
@@ -40,7 +35,6 @@ class LCATest {
 
 	}
 
-	//
 	@Test
 	public void testAdj(){
 		DAG DAG1 = new DAG(5);
@@ -67,7 +61,7 @@ class LCATest {
 		}
 	}
 
-	//
+	//----------------TESTING WITH A GRAPH THATS ACYCLICAL AND CONNECTED----------//
 	@Test
 	public void testLCAonDAG() {
 
@@ -88,7 +82,6 @@ class LCATest {
 
 		assertTrue("Testing single lca return", DAG1.lowestCommonAncestor(2,1).size() == testArray.size());
 		for(int i : testArray){
-			System.out.println(testArray);
 			assertTrue("Testing single lca return", DAG1.lowestCommonAncestor(2,1).contains(i));
 		}
 		testArray.clear();
@@ -96,7 +89,6 @@ class LCATest {
 
 		assertTrue("Testing double lca return", DAG1.lowestCommonAncestor(8,5).size() == testArray.size());
 		for(int i : testArray){
-			System.out.println(testArray);
 			assertTrue("Testing double lca return", DAG1.lowestCommonAncestor(8,5).contains(i));
 		}
 		testArray.clear();
@@ -104,14 +96,56 @@ class LCATest {
 
 		assertTrue("Testing double lca return", DAG1.lowestCommonAncestor(8,9).size() == testArray.size());
 		for(int i : testArray){
-			System.out.println(testArray);
 			assertTrue("Testing double lca return", DAG1.lowestCommonAncestor(8,9).contains(i));
 		}
 		testArray.clear();
 	}
-	
+
+	//----------------TESTING WITH A GRAPH THATS NOT CONNECTED----------//
 	@Test
 	public void DAGTest2() {
-		
+
+
+		DAG DAG2 = new DAG(10);
+
+		DAG2.addEdge(0, 2);
+		DAG2.addEdge(0, 1);
+		DAG2.addEdge(1, 3);
+		DAG2.addEdge(3, 4);
+		DAG2.addEdge(4, 5);
+
+		DAG2.addEdge(6, 7);
+		DAG2.addEdge(7, 8);
+		DAG2.addEdge(7, 9);
+
+		ArrayList<Integer> testArray = new ArrayList<Integer>();
+		testArray.add(0);
+
+		assertTrue("Testing single lca return", DAG2.lowestCommonAncestor(2,1).size() == testArray.size());
+		for(int i : testArray){
+			assertTrue("Testing single lca return", DAG2.lowestCommonAncestor(2,1).contains(i));
+		}
+		testArray.clear();
+
+		assertTrue("Testing double lca return", DAG2.lowestCommonAncestor(8,5).size() == testArray.size());
+		for(int i : testArray){
+			assertTrue("Testing double lca return", DAG2.lowestCommonAncestor(8,5).contains(i));
+		}
+		testArray.add(7);
+
+		assertTrue("Testing double lca return", DAG2.lowestCommonAncestor(8,9).size() == testArray.size());
+		for(int i : testArray){
+			assertTrue("Testing double lca return", DAG2.lowestCommonAncestor(8,9).contains(i));
+		}
+		testArray.clear();
 	}
+	
+	//----------------TESTING WITH A GRAPH THATS EMPTY----------//
+		@Test
+		public void DAGTest3() {
+			DAG DAG3 = new DAG(0);
+			ArrayList<Integer> testArray = new ArrayList<Integer>();
+			assertTrue("Testing single lca return", DAG3.lowestCommonAncestor(2,1).size() == testArray.size());
+
+		}
 }
