@@ -119,25 +119,11 @@ class LCADagTest {
 		DAG2.addEdge(7, 9);
 
 		ArrayList<Integer> testArray = new ArrayList<Integer>();
-		testArray.add(0);
-
-		assertTrue("Testing single lca return", DAG2.lowestCommonAncestor(2,1).size() == testArray.size());
-		for(int i : testArray){
-			assertTrue("Testing single lca return", DAG2.lowestCommonAncestor(2,1).contains(i));
-		}
-		testArray.clear();
-
-		assertTrue("Testing double lca return", DAG2.lowestCommonAncestor(8,5).size() == testArray.size());
-		for(int i : testArray){
-			assertTrue("Testing double lca return", DAG2.lowestCommonAncestor(8,5).contains(i));
-		}
-		testArray.add(7);
-
-		assertTrue("Testing double lca return", DAG2.lowestCommonAncestor(8,9).size() == testArray.size());
-		for(int i : testArray){
-			assertTrue("Testing double lca return", DAG2.lowestCommonAncestor(8,9).contains(i));
-		}
-		testArray.clear();
+		assertTrue("Testing single lca return", DAG2.lowestCommonAncestor(2,1).size() == 1);
+		assertTrue("Testing single lca return", DAG2.lowestCommonAncestor(2,1).contains(0));
+		assertTrue("Testing double lca return", DAG2.lowestCommonAncestor(8,5).size() == 0);
+		assertTrue("Testing double lca return", DAG2.lowestCommonAncestor(8,9).size() == 1);
+		assertTrue("Testing double lca return", DAG2.lowestCommonAncestor(8,9).contains(7));
 	}
 	
 	//----------------TESTING WITH A GRAPH THATS EMPTY----------//
@@ -148,4 +134,28 @@ class LCADagTest {
 			assertTrue("Testing single lca return", DAG3.lowestCommonAncestor(2,1).size() == testArray.size());
 
 		}
+		
+		//----------------TESTING WITH A GRAPH where nodes have loads of connections----------//
+		@Test
+		public void testLCAonDAG2() {
+
+			DAG DAG4 = new DAG(7);
+
+			DAG4.addEdge(1, 2);
+			DAG4.addEdge(1, 0);
+			DAG4.addEdge(1, 5);
+			DAG4.addEdge(2, 3);
+			DAG4.addEdge(1, 6);
+
+			ArrayList<Integer> testArray = new ArrayList<Integer>();
+
+			assertTrue("Testing single lca return", DAG4.lowestCommonAncestor(2,1).size() == 1);
+			assertTrue("Testing single lca return", DAG4.lowestCommonAncestor(2,1).contains(1));
+			System.out.println(DAG4.lowestCommonAncestor(8,9));
+			assertTrue("Testing double lca return", DAG4.lowestCommonAncestor(6,3).size() == 1);
+			assertTrue("Testing double lca return", DAG4.lowestCommonAncestor(6,3).contains(1));
+			assertTrue("Testing double lca return", DAG4.lowestCommonAncestor(8,9).size() == 0);
+			assertTrue("Testing double lca return", DAG4.lowestCommonAncestor(8,9).contains(testArray));
+		}
+
 }

@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 import org.junit.jupiter.api.Test;
 
-class LCATest {
+public class LCATest {
 
 	
 	// MEDIUM SIZED FAMILY TREE
